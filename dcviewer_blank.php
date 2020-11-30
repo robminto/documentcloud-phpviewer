@@ -14,6 +14,7 @@
 $org_name = "Example"; // THE NAME OF YOUR ORGANISATION
 $org_url = "https://www.example.uk"; // YOUR HOMEPAGE IS GOOD HERE
 $org_DC_ID = "1234"; // YOU GET YOUR ORG ID FROM DOCUMENT CLOUD - needed to stop people trying your viewer with other documents that aren't yours
+$org_logo = "file_path_to/your/logo.jpg";  // your logo URL, file path from public_html
 
 
 // YOU SHOULDN'T HAVE TO EDIT BELOW THIS - UNLESS YOU WANT TO MAKE IT WORK DIFFERENTLY, OF COURSE
@@ -62,8 +63,7 @@ if ($org != $org_DC_ID ) {
 <body> 
 <div id="header">  
   <!-- use a logo 60 pixels tall -->  
-  <a rel="external" href="<? echo $org_url;?>"><img id="banner-logo" src="/path_to_logo/logo.jpg" alt="Logo"></a> 
-    
+  <a rel="external" href="<? echo $org_url;?>"><img id="banner-logo" src="<? echo $org_logo;?>" alt="<? echo $org_name;?> Logo"></a> 
 	<h1 id='title'><div id='titletext'><? echo $title; ?></div></h1> 
 	<p id="document-source"><? echo $source; ?></p> 
 	<p id='back'><div id='article-link'><a href="<? echo $related_article; ?>">Back to <? echo $org_name;?></a></div></p> 
