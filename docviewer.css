@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+body { 
+	margin:0; 
+	padding:0; 
+	overflow: hidden;
+}
+
+div#header {
+	padding: 12px 12px 12px 12px;
+}
+
+
+@media  (min-width: 800px) {
+	img#banner-logo {
+		float:right; 
+		border:0; 
+		margin-top:3px; 
+		margin-bottom:3px;
+	}
+}
+@media  (max-width: 800px) {
+	img#banner-logo {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top:3px; 
+		margin-bottom:3px;
+		width: 50%;
+	}
+}
+
+h1#title {
+	font-family: Roboto;
+	margin:0; 
+	font-size:1.4em;
+}
+
+#document-source {
+	font-family: Roboto;
+	margin: 1px 0 3px; 
+	font-size: 15px;
+	color: #666666;
+}
+#article-link {
+	font-family: Roboto;
+	margin: 1px 0 3px; 
+	font-size: 15px;
+	text-transform: normal;
+}
+iframe {
+	display: block; 
+	position: fixed; 
+	width:100%; 
+	height:100%;
+}
+	
