@@ -9,6 +9,8 @@ https://github.com/jkeefe/Custom-Viewer-for-DocumentCloud
 In 2020, when DocumentCloud moved into beta, John Keefe's Jquery script stopped working - well, it stopped for new upload files as there was a new URL structure and new API.
 
 So I wrote a new version in PHP. It simplifies things a LOT, as rather than several .js files it uses just one PHP script and one CSS.
+- dcviewer_blank.php - feel free to drop the blank.
+- docviewer.css - you can put this in a relative file structure if you need.
 
 The coding isn't perfect - I'm a journalist-coder rather than a coder-coder, but you are free to improve etc.
 
