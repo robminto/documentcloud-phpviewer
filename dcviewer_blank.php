@@ -17,36 +17,42 @@ $org_DC_ID = "1234"; // YOU GET YOUR ORG ID FROM DOCUMENT CLOUD - needed to stop
 $org_logo = "file_path_to/your/logo.jpg";  // your logo URL, file path from public_html
 
 
-// YOU SHOULDN'T HAVE TO EDIT BELOW THIS - UNLESS YOU WANT TO MAKE IT WORK DIFFERENTLY, OF COURSE
+// YOU SHOULDN'T HAVE TO EDIT BELOW THIS - except for the logo
 // get the dcid from the URL
-$dcid = $_GET["dcid"];
-// if there is a DCID read the file
-if ($dcid !== "")  {
 
-// build the document cloud URL and get the json file
-$json_url = "https://api.beta.documentcloud.org/api/documents/".$dcid."/?format=json";
-$json = @file_get_contents($json_url);
+if(isset($_GET['dcid']))
+{
+  $dcid = $_GET["dcid"];
+    // build the document cloud URL and get the json file
+    $json_url = "https://api.www.documentcloud.org/api/documents/".$dcid."/?format=json";
+    $json = @file_get_contents($json_url);
 
-// read the json
-$fileContents = json_decode($json, TRUE);
+    // read the json
+    $fileContents = json_decode($json, TRUE);
 
-// create the variables from the array
-$canonical_url = $fileContents["canonical_url"];
-$related_article = $fileContents["related_article"];
-$source = $fileContents["source"];
-$title = $fileContents["title"];
-$org = $fileContents["organization"];
-// you can pull other attributes from the array here, it's your call. 
+    // create the variables from the array
+    $canonical_url = $fileContents["canonical_url"];
+
+    if (isset($_GET['page'])) {
+      $page = $_GET["page"];
+      $canonical_url = $canonical_url."#document/p$page";
+    }
+
+    $related_article = $fileContents["related_article"];
+    $source = $fileContents["source"];
+    $titlebar = $fileContents["data"]["titlebar"][0];
+    $org = $fileContents["organization"];
+
+  if ($org != $org_DC_ID ) {
+  echo "<pre>You have tried to load a document that is not part of $org_name.</pre> ";
+  exit;
+  }
+
 
 }
 else {
 // if there's no DCID in the URL, stop
   echo "<pre>You have found a broken link - <a href=\"$org_url\">please return to $org_name</a>. Thanks.</pre>";
-  exit;
-}
-// stop the script if it's not part of your organisation
-if ($org != $org_DC_ID ) {
-  echo "<pre>Sorry, that's not going to work - you have tried to load a document that is not part of $org_name.</pre> ";
   exit;
 }
 
@@ -58,15 +64,25 @@ if ($org != $org_DC_ID ) {
 <head><title id="maintitle">Document Cloud viewer via <? echo $org_name; ?></title> 
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="docviewer.css" media="all" rel="stylesheet" type="text/css"> 
+  <link href="css/docviewer.css" media="all" rel="stylesheet" type="text/css"> 
 </head> 
 <body> 
 <div id="header">  
   <!-- use a logo 60 pixels tall -->  
   <a rel="external" href="<? echo $org_url;?>"><img id="banner-logo" src="<? echo $org_logo;?>" alt="<? echo $org_name;?> Logo"></a> 
-	<h1 id='title'><div id='titletext'><? echo $title; ?></div></h1> 
-	<p id="document-source"><? echo $source; ?></p> 
-	<p id='back'><div id='article-link'><a href="<? echo $related_article; ?>">Back to <? echo $org_name;?></a></div></p> 
+  <h1 id='title'><div id='titletext'><? echo $titlebar; ?></div></h1> 
+  <p id="document-source">Source: <? echo $source; ?></p> 
+
+<?
+if (strlen($related_article) > 0) {
+  ?>
+  <p id='back'><div id='article-link'><a href="<? echo $related_article; ?>">Back to <? echo $org_name;?></a></div></p> 
+<?
+} else { ?>
+
+<?
+}
+?>
 </div>
 
 <!-- The document on Document Cloud is loaded into the iframe -->
