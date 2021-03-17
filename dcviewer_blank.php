@@ -1,13 +1,3 @@
-   
-   <!--   
-     Customized document viewer for use with DocumentCloud, at http://documentcloud.org
-    This uses PHP rather than JQuery for the coding.
-     This viewer is a replacement for the John Keefe one (http://johnkeefe.net/a-customized-viewer-for-documentcloud)
-     Use at your own risk, please let us know if you use / improve etc
-     Please see github for php and details
-     URL: https://github.com/robminto/documentcloud-phpviewer
-   -->
-
 <?php 
 
 // declare your own variables - ie customise for your organisation EDIT THIS BIT
@@ -37,10 +27,10 @@ if(isset($_GET['dcid']))
       $page = $_GET["page"];
       $canonical_url = $canonical_url."#document/p$page";
     }
-
+    $title = $fileContents["title"];
+    $description = $fileContents["description"];
     $related_article = $fileContents["related_article"];
     $source = $fileContents["source"];
-    $titlebar = $fileContents["data"]["titlebar"][0];
     $org = $fileContents["organization"];
 
   if ($org != $org_DC_ID ) {
@@ -61,25 +51,35 @@ else {
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd"> 
 <html> 
+   
+   <!--   
+     Customized document viewer for use with DocumentCloud, at http://documentcloud.org
+    This uses PHP rather than JQuery for the coding.
+     This viewer is a replacement for the John Keefe one (http://johnkeefe.net/a-customized-viewer-for-documentcloud)
+     Use at your own risk, please let us know if you use / improve etc
+     Please see github for php and details
+     URL: https://github.com/robminto/documentcloud-phpviewer
+   -->
+
 <head><title id="maintitle">Document Cloud viewer via <? echo $org_name; ?></title> 
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="css/docviewer.css" media="all" rel="stylesheet" type="text/css"> 
+  <link href="css/docviewer.css?v=0.2" media="all" rel="stylesheet" type="text/css"> 
 </head> 
 <body> 
 <div id="header">  
   <!-- use a logo 60 pixels tall -->  
-  <a rel="external" href="<? echo $org_url;?>"><img id="banner-logo" src="<? echo $org_logo;?>" alt="<? echo $org_name;?> Logo"></a> 
-  <h1 id='title'><div id='titletext'><? echo $titlebar; ?></div></h1> 
-  <p id="document-source">Source: <? echo $source; ?></p> 
-
+<a rel="external" href="<? echo $org_url;?>"><img id="banner-logo" src="<? echo $org_logo;?>" alt="<? echo $org_name;?> Logo"></a> 
+<div class='dcv-title'><h1><? echo $title; ?></h1></div> 
+<div class='dcv-description'><? echo $description; ?></div> 
+<div class='dcv-source'>Source: <? echo $source; ?></div>
 <?
 if (strlen($related_article) > 0) {
   ?>
-  <p id='back'><div id='article-link'><a href="<? echo $related_article; ?>">Back to <? echo $org_name;?></a></div></p> 
+  <div class='dcv-article-link'><a href="<? echo $related_article; ?>">Back to <? echo $org_name;?></a></div>
 <?
 } else { ?>
-
+  <div class='dcv-article-link'><a href="<? echo $org_url; ?>">Back to <? echo $org_name;?></a></div>
 <?
 }
 ?>
