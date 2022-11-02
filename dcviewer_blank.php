@@ -16,6 +16,7 @@ if(isset($_GET['dcid']))
     // build the document cloud URL and get the json file
     $json_url = "https://api.www.documentcloud.org/api/documents/".$dcid."/?format=json";
     $json = @file_get_contents($json_url);
+  // at this point it's better to do an authenticated CURL script to access the API. You can get authentication token via muckrock API. Details are here: https://www.documentcloud.org/help/api#authentication
 
     // read the json
     $fileContents = json_decode($json, TRUE);
