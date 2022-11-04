@@ -20,6 +20,16 @@ if(isset($_GET['dcid']))
 
     // read the json
     $fileContents = json_decode($json, TRUE);
+ 
+  // kill if the API result is a 'detail' result
+  if (isset($fileContents['detail'])) {
+  echo "There's been an error, usually one of the following:
+  <ul>
+  <li>the document ID doesn't exist</li>
+  <li>the document has been deleted</li>
+  </ul>";
+  exit;
+}
 
     // create the variables from the array
     $canonical_url = $fileContents["canonical_url"];
